@@ -6,8 +6,7 @@ namespace ExtendedConsole
 {
     public class ExtConsole
     {
-
-        // Auto property with defaults
+        // Auto Properties
         public ConsoleColor RuleOnColor { get; set; } 
         public ConsoleColor RuleOffColor { get; set; }
         public ConsoleColor PrimaryColor { get; set; }
@@ -30,7 +29,7 @@ namespace ExtendedConsole
             InitWindow();
         }
 
-        public ExtConsole LoadDefaults()
+        public void LoadDefaults()
         {
             RuleOnColor = ConsoleColor.Red;
             RuleOffColor = ConsoleColor.DarkRed;
@@ -40,8 +39,6 @@ namespace ExtendedConsole
             WindowHeight = 50;
             RuleChar = '*';
             ElementsPerLine = 10;
-            WindowTitle = "Console Application";
-            return this;
         }
 
         public ExtConsole()
@@ -49,21 +46,19 @@ namespace ExtendedConsole
             InitWindow();
         }
 
-        public ExtConsole SetWindowSize()
+        public void SetWindowSize()
         {
             Console.SetWindowSize(WindowWidth, WindowHeight);
-            return this;
         }
 
-        public ExtConsole SetWindowTitle()
+        public void SetWindowTitle()
         {
             Console.Title = WindowTitle;
-            return this;
         }
 
         public void InitWindow()
         {
-            SetWindowSize().
+            SetWindowSize();
             SetWindowTitle();
         }
 
@@ -74,7 +69,6 @@ namespace ExtendedConsole
                 Console.ForegroundColor = result.Value;
                 Console.Write(result.Key);
                 Console.ResetColor();
-
             }
             _tmpConsoleBuffer.Clear();
         }
