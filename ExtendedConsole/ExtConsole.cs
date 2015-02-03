@@ -6,20 +6,7 @@ namespace ExtendedConsole
 {
     public class ExtConsole
     {
-        // Auto Properties
-        public ConsoleColor RuleOnColor { get; set; } 
-        public ConsoleColor RuleOffColor { get; set; }
-        public ConsoleColor PrimaryColor { get; set; }
-        public ConsoleColor BoldColor { get; set; }
-        public int WindowWidth { get; set; }
-        public int WindowHeight { get; set; }
-        public char RuleChar { get; set; }
-        public int ElementsPerLine { get; set; }
-        public string WindowTitle { get; set; }
-
         private readonly Dictionary<int, Dictionary<string, ConsoleColor>> _tmpConsoleBuffer;
-
-
         // Constructors
         public ExtConsole(string title)
         {
@@ -28,6 +15,22 @@ namespace ExtendedConsole
             WindowTitle = title;
             InitWindow();
         }
+
+        public ExtConsole()
+        {
+            InitWindow();
+        }
+
+        // Auto Properties
+        public ConsoleColor RuleOnColor { get; set; }
+        public ConsoleColor RuleOffColor { get; set; }
+        public ConsoleColor PrimaryColor { get; set; }
+        public ConsoleColor BoldColor { get; set; }
+        public int WindowWidth { get; set; }
+        public int WindowHeight { get; set; }
+        public char RuleChar { get; set; }
+        public int ElementsPerLine { get; set; }
+        public string WindowTitle { get; set; }
 
         public void LoadDefaults()
         {
@@ -39,11 +42,6 @@ namespace ExtendedConsole
             WindowHeight = 50;
             RuleChar = '*';
             ElementsPerLine = 10;
-        }
-
-        public ExtConsole()
-        {
-            InitWindow();
         }
 
         public void SetWindowSize()
@@ -75,7 +73,7 @@ namespace ExtendedConsole
 
         public void PrintIfExists()
         {
-            if (_tmpConsoleBuffer.Any()) 
+            if (_tmpConsoleBuffer.Any())
                 Print();
         }
 
@@ -83,33 +81,34 @@ namespace ExtendedConsole
         {
             var count = !_tmpConsoleBuffer.Any() ? 0 : _tmpConsoleBuffer.Count() + 1;
             var line = new Dictionary<string, ConsoleColor> {{text, color}};
-            _tmpConsoleBuffer.Add(count,line);
+            _tmpConsoleBuffer.Add(count, line);
         }
 
         public void Write(string text)
         {
-            Write(text,PrimaryColor);
+            Write(text, PrimaryColor);
         }
 
         public void WriteLine(string text, ConsoleColor color)
         {
-            Write(text + "\n" , color);
+            Write(text + "\n", color);
         }
 
         public void WriteLine(string text)
         {
-            WriteLine(text,PrimaryColor);
+            WriteLine(text, PrimaryColor);
         }
 
         public void WriteBold(string text)
         {
-            Write(text,BoldColor);
+            Write(text, BoldColor);
         }
 
-        public void WriteLineBold(string text )
+        public void WriteLineBold(string text)
         {
-            WriteLine(text,BoldColor);
+            WriteLine(text, BoldColor);
         }
+
         public void ClearBuffer()
         {
             _tmpConsoleBuffer.Clear();
@@ -121,14 +120,14 @@ namespace ExtendedConsole
                 Write("\n");
         }
 
-       public void HorizontalLine()
+        public void HorizontalLine()
         {
-            for (var x = 1; x <= Console.WindowWidth - 1 ; x++)
-                Write(RuleChar.ToString(), (x%2).Equals(0)  ? RuleOffColor : RuleOnColor);                
+            for (var x = 1; x <= Console.WindowWidth - 1; x++)
+                Write(RuleChar.ToString(), (x%2).Equals(0) ? RuleOffColor : RuleOnColor);
             LineBreak();
         }
 
-        public void Pause() 
+        public void Pause()
         {
             Pause("[ Press Any Key to Continue ]");
         }
@@ -151,7 +150,7 @@ namespace ExtendedConsole
             LineBreak();
 
             if (text != null)
-                Write(text + " ",BoldColor);
+                Write(text + " ", BoldColor);
 
             Write("[Y]", BoldColor);
             Write("es or ");
@@ -160,26 +159,27 @@ namespace ExtendedConsole
             Print();
 
             do
-                key = Console.ReadKey(true);
+                key = Console.ReadKey(true); 
             while (!key.KeyChar.ToString().ToLower().Equals("y") && !key.KeyChar.ToString().ToLower().Equals("n"));
-            
+
             LineBreak(2);
 
             return key.KeyChar.ToString().ToLower().Equals("y");
         }
 
-        public void WriteAHeaderLine(string text,ConsoleColor color)
+        public void WriteAHeaderLine(string text, ConsoleColor color)
         {
             Write(RuleChar.ToString(), RuleOnColor);
-            var output = CenteredString(text,-1);
+            var output = CenteredString(text, -1);
             Write(output, color);
-            Write(RuleChar.ToString().PadLeft((Console.WindowWidth - 1) - output.Length - 1),RuleOnColor);
+            Write(RuleChar.ToString().PadLeft((Console.WindowWidth - 1) - output.Length - 1), RuleOnColor);
             LineBreak();
         }
-        public void WriteHeader(string text) 
+
+        public void WriteHeader(string text)
         {
             HorizontalLine();
-            WriteAHeaderLine(text,BoldColor);
+            WriteAHeaderLine(text, BoldColor);
             HorizontalLine();
             LineBreak();
         }
@@ -200,7 +200,7 @@ namespace ExtendedConsole
 
             foreach (var element in arr)
             {
-                Write(String.Format("{0}\t", element), (++counter % 2) == 0 ? PrimaryColor : BoldColor);
+                Write(String.Format("{0}\t", element), (++counter%2) == 0 ? PrimaryColor : BoldColor);
                 if (counter != ElementsPerLine) continue;
                 LineBreak();
                 counter = 0;
@@ -209,13 +209,13 @@ namespace ExtendedConsole
         }
 
         public int ReadAValidatedInt(
-            String prompt = "Please enter a number: ", 
+            String prompt = "Please enter a number: ",
             String error = "That was not a valid Number"
-        )
+            )
         {
             int output;
 
-            while(true)
+            while (true)
             {
                 Write(String.Format("{0}: ", prompt), BoldColor);
                 Print();
@@ -223,7 +223,7 @@ namespace ExtendedConsole
                     break;
                 WriteAErrorLine(error);
                 Print();
-            } 
+            }
             return output;
         }
 
@@ -242,15 +242,14 @@ namespace ExtendedConsole
             WriteLine(text, ConsoleColor.Green);
             LineBreak();
             Print();
-            Console.Beep(2600,30);
+            Console.Beep(2600, 30);
         }
-
 
         public string ReadANonEmptyString(string prompt, string error = "Invalid Input")
         {
             string input = null;
             bool looped = false;
-            
+
             while (String.IsNullOrWhiteSpace(input))
             {
                 if (looped && String.IsNullOrWhiteSpace(input))
