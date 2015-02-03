@@ -26,6 +26,8 @@ namespace ExtendedConsole
         public ConsoleColor RuleOffColor { get; set; }
         public ConsoleColor PrimaryColor { get; set; }
         public ConsoleColor BoldColor { get; set; }
+        public ConsoleColor ErrorColor { get; set; }
+        public ConsoleColor SuccessColor { get; set; }
         public int WindowWidth { get; set; }
         public int WindowHeight { get; set; }
         public char RuleChar { get; set; }
@@ -37,6 +39,8 @@ namespace ExtendedConsole
             RuleOnColor = ConsoleColor.Red;
             RuleOffColor = ConsoleColor.DarkRed;
             PrimaryColor = ConsoleColor.Gray;
+            ErrorColor = ConsoleColor.Red;
+            SuccessColor = ConsoleColor.Green;
             BoldColor = ConsoleColor.White;
             WindowWidth = 86;
             WindowHeight = 50;
@@ -230,7 +234,7 @@ namespace ExtendedConsole
         public void WriteAErrorLine(string text)
         {
             LineBreak();
-            WriteLine(text, ConsoleColor.Red);
+            WriteLine(text, ErrorColor);
             LineBreak();
             Print();
             Console.Beep();
@@ -239,7 +243,7 @@ namespace ExtendedConsole
         public void WriteASuccess(string text)
         {
             LineBreak();
-            WriteLine(text, ConsoleColor.Green);
+            WriteLine(text, SuccessColor);
             LineBreak();
             Print();
             Console.Beep(2600, 30);
