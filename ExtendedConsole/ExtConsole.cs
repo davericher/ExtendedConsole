@@ -217,14 +217,14 @@ namespace ExtendedConsole
         /// </summary>
         public void HorizontalString()
         {
-            for (var x = 1; x <= Console.WindowWidth - 1; x++)
+            for (var x = 1; x <= Console.WindowWidth; x++)
                 Write(RuleChar.ToString(), (x % 2).Equals(0) ? RuleOffColor : RuleOnColor);
         }
 
         public void HorizontalString(char start, char middle, char end)
         {
             Write(start.ToString(), RuleOnColor);
-            for (var x = 1; x <= Console.WindowWidth - 3; x++)
+            for (var x = 1; x <= Console.WindowWidth - 2; x++)
                 Write(middle.ToString(), (x % 2).Equals(0) ? RuleOffColor : RuleOnColor);
             Write(end.ToString(), RuleOffColor);            
         }
@@ -260,20 +260,16 @@ namespace ExtendedConsole
         ///     Default tp null and is appended by [y]es pr [n]o
         /// </param>
         /// <returns></returns>
-        public bool ReadYesOrNo(String text = null)
+        public bool ReadYesOrNo(String text)
         {
             ConsoleKeyInfo key;
             PrintIfExists();
 
             LineBreak();
+            
+            Write(text + (String.IsNullOrWhiteSpace(text) ? "" : " ") , BoldColor);
 
-            if (text != null)
-                Write(text + " ", BoldColor);
-
-            Write("[Y]", BoldColor);
-            Write("es or ");
-            Write("[N]", BoldColor);
-            Write("o: ");
+            WriteYesOrNo();
             Print();
 
             do
@@ -285,31 +281,46 @@ namespace ExtendedConsole
             return Helpers.KeyIs(key,'y');
         }
 
+        public bool ReadYesOrNo()
+        {
+            return ReadYesOrNo("");
+        }
+
+        /// <summary>
+        /// Write a formated yes or no
+        /// </summary>
+        private void WriteYesOrNo()
+        {
+            Write("[Y]", BoldColor);
+            Write("es or ");
+            Write("[N]", BoldColor);
+            Write("o: ");
+        }
+
         /// <summary>
         /// header lines are used to help format WriteHeader
         /// RuleChar(RuleCharOff) Padding text Padding RuleChar(RuleCharOn)
         /// </summary>
         /// <param name="text">Text to be formated</param>
         /// <param name="color">ConsoleColor of text</param>
-        public void WriteAHeaderLine(string text, ConsoleColor color)
+        public void WriteAHeaderString(string text, ConsoleColor color)
         {
             Write(RuleChar.ToString(), RuleOnColor);
-            var output = Helpers.CenteredString(text, -1);
+            var output = Helpers.CenteredString(text,-1);
             Write(output, color);
-            Write(RuleChar.ToString().PadLeft((Console.WindowWidth - 1) - output.Length - 1), RuleOnColor);
-            LineBreak();
+            Write(RuleChar.ToString().PadLeft( (Console.WindowWidth  - output.Length ) -1   ), RuleOnColor);;
         }
 
         /// <summary>
-        /// Combines WriteAHeaderLine and WriteAHorizontalLine to
+        /// Combines WriteAHeaderString and WriteAHorizontalLine to
         /// display a padded formated header
         /// </summary>
         /// <param name="text">The text to be formatted</param>
         public void WriteHeader(string text)
         {
-            HorizontalLine();
-            WriteAHeaderLine(text, BoldColor);
-            HorizontalLine();
+            HorizontalString();
+            WriteAHeaderString(text, BoldColor);
+            HorizontalString();
             LineBreak();
         }
 
@@ -326,7 +337,7 @@ namespace ExtendedConsole
         /// Write a formated array, allows for generics
         /// </summary>
         /// <param name="arr">Array to be printed</param>
-        public void WriteAnIntArray(IEnumerable<object> arr)
+        public void WriteAnArray(IEnumerable<object> arr)
         {
             var counter = 0;
 
@@ -375,10 +386,15 @@ namespace ExtendedConsole
         public void WriteAErrorLine(string text)
         {
             LineBreak();
-            WriteLine(text, ErrorColor);
+            WriteAnErrorString(text);
             LineBreak();
             Print();
             Console.Beep();
+        }
+
+        private void WriteAnErrorString(string text)
+        {
+            WriteLine(text, ErrorColor);
         }
 
         /// <summary>
@@ -387,13 +403,18 @@ namespace ExtendedConsole
         /// and of course a beep
         /// </summary>
         /// <param name="text"></param>
-        public void WriteASuccess(string text)
+        public void WriteASuccessLine(string text)
         {
             LineBreak();
-            WriteLine(text, SuccessColor);
+            WriteASuccessString(text);
             LineBreak();
             Print();
             Console.Beep(2600, 30);
+        }
+
+        private void WriteASuccessString(string text)
+        {
+            WriteLine(text, SuccessColor);
         }
 
         /// <summary>
@@ -418,5 +439,26 @@ namespace ExtendedConsole
             }
             return input;
         }
+
+        /// <summary>
+        /// Invert the current Rule colors
+        /// </summary>
+        public void InvertRuleColors()
+        {
+            ConsoleColor tmpOn, tmpOff;
+            tmpOn = RuleOnColor;
+            tmpOff = RuleOffColor;
+
+            RuleOffColor = tmpOn;
+            RuleOnColor = tmpOff;
+        }
+
+        public void SetRuleFormatting(ConsoleColor ruleOn, ConsoleColor ruleOff, char ruleChar)
+        {
+            RuleOnColor = ruleOn;
+            RuleOffColor = ruleOff;
+            ruleChar = ruleChar;
+        }
+
     }
 }
