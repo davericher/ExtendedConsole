@@ -50,6 +50,7 @@ namespace ExtendedConsole
         public string WindowTitle { get; set; }             // Title of the window
         public string PausePrompt { get; set; }             // Default pause prompt
 
+
         /// <summary>
         /// Initialize the defaults, 
         /// extend this class and override this method for different defaults
@@ -203,9 +204,29 @@ namespace ExtendedConsole
         /// </summary>
         public void HorizontalLine()
         {
-            for (var x = 1; x <= Console.WindowWidth - 1; x++)
-                Write(RuleChar.ToString(), (x%2).Equals(0) ? RuleOffColor : RuleOnColor);
+            HorizontalString();
             LineBreak();
+        }
+
+        public void HorizontalLine(char start, char middle, char end)
+        {
+            HorizontalString(start,middle,end);
+        }
+        /// <summary>
+        /// Write a horizontal formated line to the buffer
+        /// </summary>
+        public void HorizontalString()
+        {
+            for (var x = 1; x <= Console.WindowWidth - 1; x++)
+                Write(RuleChar.ToString(), (x % 2).Equals(0) ? RuleOffColor : RuleOnColor);
+        }
+
+        public void HorizontalString(char start, char middle, char end)
+        {
+            Write(start.ToString(), RuleOnColor);
+            for (var x = 1; x <= Console.WindowWidth - 3; x++)
+                Write(middle.ToString(), (x % 2).Equals(0) ? RuleOffColor : RuleOnColor);
+            Write(end.ToString(), RuleOffColor);            
         }
 
         /// <summary>
