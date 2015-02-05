@@ -445,9 +445,8 @@ namespace ExtendedConsole
         /// </summary>
         public void InvertRuleColors()
         {
-            ConsoleColor tmpOn, tmpOff;
-            tmpOn = RuleOnColor;
-            tmpOff = RuleOffColor;
+            var tmpOn = RuleOnColor;
+            var tmpOff = RuleOffColor;
 
             RuleOffColor = tmpOn;
             RuleOnColor = tmpOff;
@@ -457,7 +456,7 @@ namespace ExtendedConsole
         {
             RuleOnColor = ruleOn;
             RuleOffColor = ruleOff;
-            ruleChar = ruleChar;
+            RuleChar = ruleChar;
         }
 
     }
