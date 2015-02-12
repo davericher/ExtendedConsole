@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 
 namespace ExtendedConsole
 {
@@ -25,6 +26,18 @@ namespace ExtendedConsole
         public static String CenteredString(string text, int offset = 0)
         {
             return String.Format("{0," + (Console.WindowWidth / 2 - offset + (text.Length / 2)) + "}", text);
+        }
+
+
+        public static string Pluralize(string input)
+        {
+            //TODO make this adjust on actual ives words and etc, borrow from php laravel?
+            return input + "s";
+        }
+
+        public static string SplitCamelCase(string input)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
         }
     }
 }

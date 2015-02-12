@@ -5,9 +5,9 @@ namespace ExtendedConsole
     public class OldSchoolConsole : ExtConsole
     {
 
-        public override void LoadDefaults()
+        public new void SetDefaults()
         {
-            base.LoadDefaults();
+            base.SetDefaults();
             RuleOnColor = ConsoleColor.Cyan;
             RuleOffColor = ConsoleColor.DarkCyan;
             RuleChar = '%';
