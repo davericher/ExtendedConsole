@@ -1,10 +1,16 @@
 ﻿using System;
-using System.Xml;
+using System.Data.Entity.Design.PluralizationServices;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace ExtendedConsole
 {
     public static class Helpers
     {
+        // National for Pluralize and Singular string functions
+        private const string Lang = "en-us";
+        
+
         /// <summary>
         /// Check the current read key for the specified character
         /// </summary>
@@ -15,7 +21,7 @@ namespace ExtendedConsole
         {
             return press.KeyChar.ToString().ToLower().Equals(key.ToString());
         }
-
+       
         /// <summary>
         /// Right pad a line of text so it is centered on the console and takes into account 
         /// current resolution of said console
@@ -31,13 +37,28 @@ namespace ExtendedConsole
 
         public static string Pluralize(string input)
         {
-            //TODO make this adjust on actual ives words and etc, borrow from php laravel?
-            return input + "s";
+            return PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Pluralize(input);
+        }
+
+        public static string Singular(string input)
+        {
+            return PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Singularize(input);
         }
 
         public static string SplitCamelCase(string input)
         {
-            return System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
+            return Regex.Replace(UppercaseFirst(input), "([A-Z])", " $1", RegexOptions.Compiled).Trim();
+        }
+
+        public static string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
         }
     }
 }

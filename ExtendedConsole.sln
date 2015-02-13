@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedConsole", "ExtendedConsole\ExtendedConsole.csproj", "{584825C4-2339-4E72-9911-F3FEC8A6FDFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedConsole.tests", "ExtendedConsole.tests\ExtendedConsole.tests.csproj", "{B5101266-9961-4456-A693-02C3AE71AD51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{584825C4-2339-4E72-9911-F3FEC8A6FDFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{584825C4-2339-4E72-9911-F3FEC8A6FDFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{584825C4-2339-4E72-9911-F3FEC8A6FDFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5101266-9961-4456-A693-02C3AE71AD51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5101266-9961-4456-A693-02C3AE71AD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5101266-9961-4456-A693-02C3AE71AD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5101266-9961-4456-A693-02C3AE71AD51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
