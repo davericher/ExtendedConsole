@@ -31,34 +31,58 @@ namespace ExtendedConsole
         /// <returns>A reformatted string</returns>
         public static String CenteredString(string text, int offset = 0)
         {
-            return String.Format("{0," + (Console.WindowWidth / 2 - offset + (text.Length / 2)) + "}", text);
+            return ValidateString(String.Format("{0," + (Console.WindowWidth / 2 - offset + (text.Length / 2)) + "}", text));
         }
 
-
+        /// <summary>
+        /// Pluralize a word, draws upon MVC framework
+        /// </summary>
+        /// <param name="input">Word to be pluralized</param>
+        /// <returns>Plural string</returns>
         public static string Pluralize(string input)
         {
-            return PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Pluralize(input);
+            return ValidateString(PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Pluralize(input));
         }
 
+        /// <summary>
+        /// Make a plural world singular, draws upon MVC framework
+        /// </summary>
+        /// <param name="input">Word to make singular</param>
+        /// <returns>Singular string</returns>
         public static string Singular(string input)
         {
-            return PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Singularize(input);
+            return ValidateString(PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Singularize(input));
         }
 
+        /// <summary>
+        /// Split a camel case expression
+        /// </summary>
+        /// <param name="input">Camel Case string</param>
+        /// <returns>Reformatted string</returns>
         public static string SplitCamelCase(string input)
         {
-            return Regex.Replace(UppercaseFirst(input), "([A-Z])", " $1", RegexOptions.Compiled).Trim();
+            return ValidateString(Regex.Replace(UppercaseFirst(input), "([A-Z])", " $1", RegexOptions.Compiled).Trim());
         }
 
+        /// <summary>
+        /// Make the forst letter in a string uppercase
+        /// </summary>
+        /// <param name="s">String</param>
+        /// <returns>String with first letter upcased</returns>
         public static string UppercaseFirst(string s)
         {
-            // Check for empty string.
-            if (string.IsNullOrEmpty(s))
-            {
-                return string.Empty;
-            }
-            // Return char and concat substring.
-            return char.ToUpper(s[0]) + s.Substring(1);
+            return ValidateString(char.ToUpper(s[0]) + s.Substring(1));
         }
+
+        /// <summary>
+        /// Validate a string has content or is not null, if it is return an empty string
+        /// </summary>
+        /// <param name="input">string to be validated</param>
+        /// <returns>Results or Empty string</returns>
+        public static string ValidateString(string input)
+        {
+            return string.IsNullOrEmpty(input) ? string.Empty : input;
+        }
+
     }
 }

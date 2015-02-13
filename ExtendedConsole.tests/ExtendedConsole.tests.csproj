@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="HelpersTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OptionsListTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExtendedConsole\ExtendedConsole.csproj">
