@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity.Design.PluralizationServices;
 using System.Globalization;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace ExtendedConsole
@@ -71,7 +72,7 @@ namespace ExtendedConsole
         /// <returns>String with first letter upcased</returns>
         public static string UppercaseFirst(string s)
         {
-            return ValidateString(char.ToUpper(s[0]) + s.Substring(1));
+            return !string.IsNullOrEmpty(s) ? ValidateString(char.ToUpper(s[0]) + s.Substring(1)) : String.Empty;
         }
 
         /// <summary>
@@ -84,5 +85,34 @@ namespace ExtendedConsole
             return string.IsNullOrEmpty(input) ? string.Empty : input;
         }
 
+        /// <summary>
+        /// Check if both the Directory or File exist
+        /// </summary>
+        /// <param name="dir">The Directory to check</param>
+        /// <param name="fullPath">The full path to the file</param>
+        /// <param name="createDirectory">Create directory if it does not exist</param>
+        /// <returns></returns>
+        public static bool FileOrDirectoryExists(string dir, string fullPath, bool createDirectory = false)
+        {
+            return (DirExists(dir,createDirectory) && FileExists(fullPath));
+        }
+
+        /// <summary>
+        /// Check if  directory exists
+        /// </summary>
+        /// <param name="location">Directory location</param>
+        /// <param name="create">Create the directory if it does not exist</param>
+        /// <returns></returns>
+        public static  bool DirExists(string location,bool create = false)
+        {
+            if (create)
+                Directory.CreateDirectory(location);
+            return Directory.Exists(location);
+        }
+
+        public static bool FileExists(string location)
+        {
+            return File.Exists(location);
+        }
     }
 }
