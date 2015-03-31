@@ -16,16 +16,16 @@ namespace ExtendedConsole.tests
             Assert.AreEqual("dogs",test2);
         }
 
-        [TestMethod]
-        [TestCategory("String Modifiers")]
-        public void TestSingular()
-        {
-            string test1 = Helpers.Singular("knives");
-            string test2 = Helpers.Singular("dogs");
-            Assert.AreEqual("knife", test1);
-            Assert.AreNotEqual("knive", test1);
-            Assert.AreEqual("dog", test2);
-        }
+//        [TestMethod]
+//        [TestCategory("String Modifiers")]
+//        public void TestSingular()
+//        {
+//            string test1 = Helpers.Singular("knives");
+//            string test2 = Helpers.Singular("dogs");
+//            Assert.AreEqual("knife", test1);
+//            Assert.AreNotEqual("knive", test1);
+//            Assert.AreEqual("dog", test2);
+//        }
 
         // Test to see if Camel Case is split up correctly
         [TestMethod]
