@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Entity.Design.PluralizationServices;
+using Pluralize;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -40,20 +40,12 @@ namespace ExtendedConsole
         /// </summary>
         /// <param name="input">Word to be pluralized</param>
         /// <returns>Plural string</returns>
-        public static string Pluralize(string input)
+		public static string Pluralize(string input, int count = 2)
         {
-            return ValidateString(PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Pluralize(input));
+			var pluralizer = new Pluralizer ();
+			return ValidateString(pluralizer.Pluralize(input,count));
         }
-
-        /// <summary>
-        /// Make a plural world singular, draws upon MVC framework
-        /// </summary>
-        /// <param name="input">Word to make singular</param>
-        /// <returns>Singular string</returns>
-        public static string Singular(string input)
-        {
-            return ValidateString(PluralizationService.CreateService(CultureInfo.GetCultureInfo(Lang)).Singularize(input));
-        }
+			
 
         /// <summary>
         /// Split a camel case expression
