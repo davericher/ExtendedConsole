@@ -1,16 +1,17 @@
 ﻿using System;
 using Pluralize;
-using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace ExtendedConsole
 {
     public static class Helpers
     {
-        // National for Pluralize and Singular string functions
-        private const string Lang = "en-us";
-        
+        // Singleton?
+        // TODO Figure out singletons...
+        private static Pluralizer _pluralizer = new Pluralizer();
+
 
         /// <summary>
         /// Check the current read key for the specified character
@@ -40,10 +41,23 @@ namespace ExtendedConsole
         /// </summary>
         /// <param name="input">Word to be pluralized</param>
         /// <returns>Plural string</returns>
-		public static string Pluralize(string input, int count = 2)
+		public static string Pluralize(string input)
         {
-			var pluralizer = new Pluralizer ();
-			return ValidateString(pluralizer.Pluralize(input,count));
+            return Pluralize(input,2.0);
+        }
+
+        public static string Pluralize(string input, int count)
+        {
+            return Pluralize(input, Convert.ToDouble(count));
+        }
+        public static string Pluralize(string input, double count)
+        {
+            return _pluralizer.Pluralize("{" + ValidateString(input) + "}", count);
+        }
+
+        public static string PluralizeString(string input, double count)
+        {
+            return _pluralizer.Pluralize(input, count);
         }
 			
 
